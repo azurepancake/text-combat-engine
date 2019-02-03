@@ -84,7 +84,7 @@ void playersTurn(struct Player *player, struct Enemy *enemy)
 	printf("----------\n");
 	printf("HP: %d\n", player->hp);
 	printf("MP: %d\n", player->mp);
-    printf("----------\n");
+	printf("----------\n");
 	printf("1) Attack\n");
 	printf("2) Magic\n");
 	printf("3) Item\n");
