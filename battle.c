@@ -4,8 +4,8 @@
 #include <time.h>
 
 struct Weapon {
-    char name[20];
-    int dmg;
+	char name[20];
+	int dmg;
 } weapon;
 
 struct Armor {
@@ -77,19 +77,19 @@ int main()
 	strcpy(breastplate->name, "Breastplate");
 
 	// SPELLS
-    struct Spell *fire;
-    fire = malloc(sizeof(struct Spell));
-    fire->dmg = 10;
-    strcpy(fire->name, "Fire");
+	struct Spell *fire;
+	fire = malloc(sizeof(struct Spell));
+	fire->dmg = 10;
+	strcpy(fire->name, "Fire");
 
-    struct Spell *ice;
-    ice = malloc(sizeof(struct Spell));
-    ice->dmg = 5;
-    strcpy(ice->name, "Ice");
+	struct Spell *ice;
+	ice = malloc(sizeof(struct Spell));
+	ice->dmg = 5;
+	strcpy(ice->name, "Ice");
 
-    struct Spell *spells[10] = { 0 };
-    spells[0] = fire;
-    spells[1] = ice;
+	struct Spell *spells[10] = { 0 };
+	spells[0] = fire;
+	spells[1] = ice;
 
 	// CREATE PLAYER
 	struct Player *player;
@@ -153,9 +153,9 @@ void playerAttack(struct Player *player, struct Enemy *enemy)
 
 void enemyAttack(struct Player *player, struct Enemy *enemy)
 {
-    int dmg = enemy->dmg - (randRange(1, 2));
-    printf("\n-> %s attacks for %d!\n", enemy->name, dmg);
-    player->hp -= dmg;
+	int dmg = enemy->dmg - (randRange(1, 2));
+	printf("\n-> %s attacks for %d!\n", enemy->name, dmg);
+	player->hp -= dmg;
 }
 
 void playerSpell(struct Player *player, struct Enemy *enemy)
