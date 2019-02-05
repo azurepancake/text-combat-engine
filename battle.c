@@ -17,12 +17,14 @@ struct Spell {
 	char name[20];
 	int dmg;
 	int healPower;
+	int mp;
 } spell;
 
 struct Item {
 	char name[20];
 	int dmg;
 	int healPower;
+	int quantity;
 } item;
 
 struct Player {
@@ -80,14 +82,16 @@ int main()
 	struct Spell *fire;
 	fire = malloc(sizeof(struct Spell));
 	fire->dmg = 10;
+	fire->mp = 5;
 	strcpy(fire->name, "Fire");
 
 	struct Spell *ice;
 	ice = malloc(sizeof(struct Spell));
 	ice->dmg = 5;
+	ice->mp = 5;
 	strcpy(ice->name, "Ice");
 
-	struct Spell *spells[10] = { 0 };
+	struct Spell *spells[10] = { 0 }; // fill spells array with zeros
 	spells[0] = fire;
 	spells[1] = ice;
 
@@ -120,7 +124,15 @@ struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct 
 	player->head = head;
 	player->chest = chest;
 	player->totalDef = player->def + player->head->def + player->chest->def;
-	player->spells[10] = { 0 };
+
+	// fill player->spells array with zeros
+	int length = sizeof(player->spells) / sizeof(*player->spells);
+	for(int i = 0; i < length; i++) {
+		player->spells[i] = 0;
+	}
+
+	player->spells[0] = spells[0]; // 0 = fire
+	player->spells[1] = spells[1]; // 1 = ice
 
 	return player;
 }
@@ -160,13 +172,33 @@ void enemyAttack(struct Player *player, struct Enemy *enemy)
 
 void playerSpell(struct Player *player, struct Enemy *enemy)
 {
-	printf("\n-> %s casts spell!\n", player->name);
+
+	printf("\n----------\n");
+	printf("SPELLS:\n");
+	printf("----------\n");
+	int length = sizeof(player->spells) / sizeof(*player->spells);
+	for(int i = 0; i <= length; i++) {
+		if(player->spells[i] == 0) {
+			break;
+		}
+
+		printf("%d) %s\n", i + 1, player->spells[i]->name);
+	}
+
+	int choice;
+	printf("> ");
+	scanf("%d", &choice);
+	choice = choice - 1;
+	printf("\n-> %s casts %s for %d!\n", player->name, player->spells[choice]->name, player->spells[choice]->dmg);
+	player->mp -= player->spells[choice]->mp;
+	enemy->hp -= player->spells[choice]->dmg;
 }
 
 void playersTurn(struct Player *player, struct Enemy *enemy)
 {
 	int choice;
-	printf("\n%s\n", player->name);
+	printf("\n----------\n");
+	printf("%s\n", player->name);
 	printf("----------\n");
 	printf("HP: %d\n", player->hp);
 	printf("MP: %d\n", player->mp);
