@@ -29,6 +29,7 @@ struct Player {
 	struct Weapon *weapon;
 	struct Armor *head;
 	struct Armor *chest;
+	struct Spell *spells[10];
 	char name[20];
 	int level;
 	int hp;
@@ -45,7 +46,7 @@ struct Enemy {
 	int dmg;
 } enemy;
 
-struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct Armor *head, struct Armor *chest);
+struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct Armor *head, struct Armor *chest, struct Spell **spells);
 struct Enemy *setupEnemy(struct Enemy *enemy);
 int setupArmor();
 int randRange(int low, int high);
@@ -75,9 +76,24 @@ int main()
 	breastplate->def = 5;
 	strcpy(breastplate->name, "Breastplate");
 
+	// SPELLS
+    struct Spell *fire;
+    fire = malloc(sizeof(struct Spell));
+    fire->dmg = 10;
+    strcpy(fire->name, "Fire");
+
+    struct Spell *ice;
+    ice = malloc(sizeof(struct Spell));
+    ice->dmg = 5;
+    strcpy(ice->name, "Ice");
+
+    struct Spell *spells[10] = { 0 };
+    spells[0] = fire;
+    spells[1] = ice;
+
 	// CREATE PLAYER
 	struct Player *player;
-	player = setupPlayer(player, broadsword, skullcap, breastplate);
+	player = setupPlayer(player, broadsword, skullcap, breastplate, spells);
 
 	// CREATE ENEMY
 	struct Enemy *enemy;
@@ -92,7 +108,7 @@ int main()
 	return 0;
 }
 
-struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct Armor *head, struct Armor *chest)
+struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct Armor *head, struct Armor *chest, struct Spell **spells)
 {
 	player = malloc(sizeof(struct Player)); // need error checking
 	strcpy(player->name, "Player");
@@ -104,6 +120,7 @@ struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct 
 	player->head = head;
 	player->chest = chest;
 	player->totalDef = player->def + player->head->def + player->chest->def;
+	player->spells[10] = { 0 };
 
 	return player;
 }
@@ -118,25 +135,6 @@ struct Enemy *setupEnemy(struct Enemy *enemy)
 
 	return enemy;
 }
-
-/*
-int setupArmor() 
-{
-	int def;
-
-	// head armor
-    strcpy(player->head.name, "Skull Cap");
-    player->head.def = 3;
-
-	// body armor
-    strcpy(player->body.name, "Leather Cuirass");
-    player->body.def = 3;
-
-    def = player->head.def + player->body.def;
-	
-	return def;
-}
-*/
 
 int randRange(int low, int high)
 {
