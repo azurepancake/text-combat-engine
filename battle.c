@@ -6,26 +6,24 @@
 struct Weapon {
 	char name[20];
 	int dmg;
-} weapon;
+};
 
 struct Armor {
 	char name[20];
 	int def;
-} armor;
+};
 
 struct Spell {
 	char name[20];
 	int dmg;
-	int healPower;
 	int mp;
-} spell;
+};
 
 struct Item {
 	char name[20];
 	int dmg;
-	int healPower;
 	int quantity;
-} item;
+};
 
 struct Player {
 	struct Weapon *weapon;
@@ -39,24 +37,25 @@ struct Player {
 	int ap;
 	int def;
 	int totalDef;
-} player;
+};
 
 struct Enemy {
 	char name[20];
 	int hp;
 	int mp;
 	int dmg;
-} enemy;
+};
 
 struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct Armor *head, struct Armor *chest, struct Spell **spells);
 struct Enemy *setupEnemy(struct Enemy *enemy);
 int setupArmor();
 int randRange(int low, int high);
+int playersTurn(struct Player *player, struct Enemy *enemy);
 void playerAttack(struct Player *player, struct Enemy *enemy);
 void playerSpell(struct Player *player, struct Enemy *enemy);
-void playersTurn(struct Player *player, struct Enemy *enemy);
 void enemysAttack(struct Player *player, struct Enemy *enemy);
 void enemysTurn(struct Player *player, struct Enemy *enemy);
+void cleanUpMemory(struct Weapon **weaponList, struct Armor **armorList, struct Spell **spellList, struct Player *player, struct Enemy *enemy);
 
 int main()
 {
@@ -91,7 +90,7 @@ int main()
 	ice->mp = 5;
 	strcpy(ice->name, "Ice");
 
-	struct Spell *spells[10] = { 0 }; // fill spells array with zeros
+	struct Spell *spells[10] = { 0 };
 	spells[0] = fire;
 	spells[1] = ice;
 
@@ -104,12 +103,50 @@ int main()
 	enemy = setupEnemy(enemy);
 
 	// MAIN LOOP
-	for(;;) {
-		playersTurn(player, enemy);
-		enemysTurn(player, enemy);
+	int state;
+	while(state != 1) {
+		state = playersTurn(player, enemy);
+		if(state == 0) {
+			enemysTurn(player, enemy);
+		}
 	}
 
+	struct Weapon *weaponList[] = { broadsword };
+	struct Armor *armorList[] = { skullcap, breastplate };
+	struct Spell *spellList[] = { fire, ice };
+	free(player);
+	free(enemy);
+
+	cleanUpMemory(weaponList, armorList, spellList, player, enemy);
+
 	return 0;
+}
+
+void cleanUpMemory(struct Weapon **weaponList, struct Armor **armorList, struct Spell **spellList, struct Player *player, struct Enemy *enemy)
+{
+	int i;
+	int length;
+
+	// Free up weapon memory	
+	length = sizeof(weaponList) / sizeof(*weaponList);
+	for(i = 0; i <= length; i++) {
+		free(weaponList[i]);
+	}
+
+	// Free up armor memory
+    length = sizeof(armorList) / sizeof(*armorList);
+    for(i = 0; i <= length; i++) {
+        free(armorList[i]);
+    }
+
+	// Free up spell memory
+    length = sizeof(spellList) / sizeof(*spellList);
+    for(i = 0; i <= length; i++) {
+        free(spellList[i]);
+    }
+
+	free(player);
+	free(enemy);
 }
 
 struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct Armor *head, struct Armor *chest, struct Spell **spells)
@@ -125,7 +162,6 @@ struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct 
 	player->chest = chest;
 	player->totalDef = player->def + player->head->def + player->chest->def;
 
-	// fill player->spells array with zeros
 	int length = sizeof(player->spells) / sizeof(*player->spells);
 	for(int i = 0; i < length; i++) {
 		player->spells[i] = 0;
@@ -194,7 +230,7 @@ void playerSpell(struct Player *player, struct Enemy *enemy)
 	enemy->hp -= player->spells[choice]->dmg;
 }
 
-void playersTurn(struct Player *player, struct Enemy *enemy)
+int playersTurn(struct Player *player, struct Enemy *enemy)
 {
 	int choice;
 	printf("\n----------\n");
@@ -212,18 +248,21 @@ void playersTurn(struct Player *player, struct Enemy *enemy)
 	printf("> ");
 	scanf("%d", &choice);
 
-	if(choice == 1) {
-		playerAttack(player, enemy);
+	switch(choice)
+	{
+		case 0: return 1;
+			break;
+		case 1: playerAttack(player, enemy);
+			break;
+		case 2: playerSpell(player, enemy);
+			break;
+		case 3: printf("\n-> %s uses item!\n", player->name);
+			break;
+		default: printf("\nInvalid entry..\n");
+			break;
 	}
-	else if(choice == 2) {
-		playerSpell(player, enemy);
-	}
-	else if(choice == 3) {
-		printf("\n-> %s uses item!\n", player->name);
-	}
-	else {
-		printf("\nInvalid entry..\n");
-	}
+	
+	return 0;
 }
 
 void enemysTurn(struct Player *player, struct Enemy *enemy)
