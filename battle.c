@@ -114,8 +114,6 @@ int main()
 	struct Weapon *weaponList[] = { broadsword };
 	struct Armor *armorList[] = { skullcap, breastplate };
 	struct Spell *spellList[] = { fire, ice };
-	free(player);
-	free(enemy);
 
 	cleanUpMemory(weaponList, armorList, spellList, player, enemy);
 
