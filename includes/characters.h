@@ -1,10 +1,9 @@
-#ifndef __BATTLE_H
-#define __BATTLE_H
+#ifndef __CHARACTERS_H
+#define __CHARACTERS_H
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <time.h>
+#include <helpers.h>
 
 struct Weapon {
     char name[20];
@@ -20,12 +19,6 @@ struct Spell {
     char name[20];
     int dmg;
     int mp;
-};
-
-struct Item {
-    char name[20];
-    int dmg;
-    int quantity;
 };
 
 struct Player {
@@ -51,7 +44,11 @@ struct Enemy {
 
 struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct Armor *head, struct Armor *chest, struct Spell **spells);
 struct Enemy *setupEnemy(struct Enemy *enemy);
-int setupArmor();
+int playersTurn(struct Player *player, struct Enemy *enemy);
+void playerAttack(struct Player *player, struct Enemy *enemy);
+void playerSpell(struct Player *player, struct Enemy *enemy);
+void enemysAttack(struct Player *player, struct Enemy *enemy);
+void enemysTurn(struct Player *player, struct Enemy *enemy);
 void cleanUpMemory(struct Weapon **weaponList, struct Armor **armorList, struct Spell **spellList, struct Player *player, struct Enemy *enemy);
 
 #endif
