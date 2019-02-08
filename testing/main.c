@@ -1,4 +1,5 @@
 #include <battle.h>
+#include <characters.h>
 
 int main()
 {

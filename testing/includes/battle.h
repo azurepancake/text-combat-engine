@@ -52,12 +52,6 @@ struct Enemy {
 struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct Armor *head, struct Armor *chest, struct Spell **spells);
 struct Enemy *setupEnemy(struct Enemy *enemy);
 int setupArmor();
-int randRange(int low, int high);
-int playersTurn(struct Player *player, struct Enemy *enemy);
-void playerAttack(struct Player *player, struct Enemy *enemy);
-void playerSpell(struct Player *player, struct Enemy *enemy);
-void enemysAttack(struct Player *player, struct Enemy *enemy);
-void enemysTurn(struct Player *player, struct Enemy *enemy);
 void cleanUpMemory(struct Weapon **weaponList, struct Armor **armorList, struct Spell **spellList, struct Player *player, struct Enemy *enemy);
 
 #endif
