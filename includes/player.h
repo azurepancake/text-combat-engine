@@ -22,6 +22,12 @@ struct Spell {
     int mp;
 };
 
+struct Item {
+	char name[20];
+	int dmg;
+	int quantity;
+};
+
 struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct Armor *head, struct Armor *chest, struct Spell **spells);
 int playersTurn(struct Player *player, struct Enemy *enemy);
 void playerAttack(struct Player *player, struct Enemy *enemy);
