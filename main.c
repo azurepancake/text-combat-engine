@@ -1,4 +1,6 @@
-#include <characters.h>
+#include "player.h"
+#include "enemy.h"
+#include "helpers.h"
 
 int main()
 {

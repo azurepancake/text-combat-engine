@@ -1,5 +1,4 @@
-#include "characters.h"
-#include "helpers.h"
+#include "player.h"
 
 struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct Armor *head, struct Armor *chest, struct Spell **spells)
 {
@@ -25,29 +24,11 @@ struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct 
     return player;
 }
 
-struct Enemy *setupEnemy(struct Enemy *enemy)
-{
-    enemy = malloc(sizeof(struct Enemy)); // need error checking
-    strcpy(enemy->name, "Grunt");
-    enemy->hp = 100;
-    enemy->mp = 100;
-    enemy->dmg = 4;
-
-    return enemy;
-}
-
 void playerAttack(struct Player *player, struct Enemy *enemy)
 {
     int dmg = (player->ap * player->weapon->dmg) - (randRange(1, 3));
     printf("\n-> %s attacks for %d!\n", player->name, dmg);
     enemy->hp -= dmg;
-}
-
-void enemyAttack(struct Player *player, struct Enemy *enemy)
-{
-    int dmg = enemy->dmg - (randRange(1, 2));
-    printf("\n-> %s attacks for %d!\n", enemy->name, dmg);
-    player->hp -= dmg;
 }
 
 void playerSpell(struct Player *player, struct Enemy *enemy)
@@ -107,36 +88,4 @@ int playersTurn(struct Player *player, struct Enemy *enemy)
     }
 
     return 0;
-}
-
-void enemysTurn(struct Player *player, struct Enemy *enemy)
-{
-    enemyAttack(player, enemy);
-}
-
-void cleanUpMemory(struct Weapon **weaponList, struct Armor **armorList, struct Spell **spellList, struct Player *player, struct Enemy *enemy)
-{
-    int i;
-    int length;
-
-    // Free up weapon memory
-    length = sizeof(weaponList) / sizeof(*weaponList);
-    for(i = 0; i <= length; i++) {
-        free(weaponList[i]);
-    }
-
-    // Free up armor memory
-    length = sizeof(armorList) / sizeof(*armorList);
-    for(i = 0; i <= length; i++) {
-        free(armorList[i]);
-    }
-
-    // Free up spell memory
-    length = sizeof(spellList) / sizeof(*spellList);
-    for(i = 0; i <= length; i++) {
-        free(spellList[i]);
-    }
-
-    free(player);
-    free(enemy);
 }
