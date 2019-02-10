@@ -13,6 +13,7 @@ struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct 
     player->chest = chest;
     player->totalDef = player->def + player->head->def + player->chest->def;
 
+	/*
     int length = sizeof(player->spells) / sizeof(*player->spells);
     for(int i = 0; i < length; i++) {
         player->spells[i] = 0;
@@ -20,6 +21,9 @@ struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct 
 
     player->spells[0] = spells[0]; // 0 = fire
     player->spells[1] = spells[1]; // 1 = ice
+	*/
+
+	player->spells = spells;
 
     return player;
 }
@@ -33,13 +37,14 @@ void playerAttack(struct Player *player, struct Enemy *enemy)
 
 void playerSpell(struct Player *player, struct Enemy *enemy)
 {
-
     printf("\n----------\n");
     printf("SPELLS:\n");
     printf("----------\n");
-    int length = sizeof(player->spells) / sizeof(*player->spells);
-    for(int i = 0; i <= length; i++) {
-        if(player->spells[i] == 0) {
+    
+	//int length = (sizeof(player->spells) / sizeof(*player->spells));
+	
+    for(int i = 0; i <= SPELLS; i++) {
+        if(player->spells[i]->learned == 0) {
             break;
         }
 
@@ -49,11 +54,36 @@ void playerSpell(struct Player *player, struct Enemy *enemy)
     int choice;
     printf("> ");
     scanf("%d", &choice);
-    choice = choice - 1;
+	choice = choice - 1;
+
+	// prevent player from accessing unlearned spells
+	if(player->spells[choice]->learned == 0) {
+		printf("\n-> Invalid choice!\n");
+	
+		return;
+	}
+
     printf("\n-> %s casts %s for %d!\n", player->name, player->spells[choice]->name, player->spells[choice]->dmg);
     player->mp -= player->spells[choice]->mp;
     enemy->hp -= player->spells[choice]->dmg;
 }
+
+/*
+int playerItem(struct Player *player, struct Enemy *enemy)
+{
+	printf("\n----------\n");
+	printf("ITEMS:\n");
+	printf("----------\n");
+	int length = sizeof(items) / sizeof(items);
+	for(int i = 0; i <= length; i++) {
+		if(items[i] == 0) {
+			break;
+		}
+
+		printf("%d) %s\n", i + 1, items[i]->name);
+	}
+}
+*/
 
 int playersTurn(struct Player *player, struct Enemy *enemy)
 {
@@ -81,7 +111,7 @@ int playersTurn(struct Player *player, struct Enemy *enemy)
             break;
         case 2: playerSpell(player, enemy);
             break;
-        case 3: printf("\n-> %s uses item!\n", player->name);
+        case 3: //playerItem(player, enemy);
             break;
         default: printf("\nInvalid entry..\n");
             break;

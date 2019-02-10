@@ -27,24 +27,36 @@ int main()
     fire = malloc(sizeof(struct Spell));
     fire->dmg = 10;
     fire->mp = 5;
+	fire->learned = 1;
     strcpy(fire->name, "Fire");
 
     struct Spell *ice;
     ice = malloc(sizeof(struct Spell));
     ice->dmg = 5;
     ice->mp = 5;
+	ice->learned = 1;
     strcpy(ice->name, "Ice");
 
 	struct Spell *heal;
 	heal = malloc(sizeof(struct Spell));
 	heal->dmg = -10;
 	heal->mp = 5;
+	heal->learned = 1;
 	strcpy(heal->name, "Heal");
 
-	// Create known spell array with initially learned spells
-    struct Spell *spells[10] = { 0 };
+	struct Spell *barrier;
+	barrier = malloc(sizeof(struct Spell));
+	barrier->dmg = -10;
+	barrier->mp = 5;
+	barrier->learned = 0;
+	strcpy(barrier->name, "Barrier");
+
+	// Create array of all spells
+    struct Spell *spells[SPELLS] = { 0 };
     spells[0] = fire;
     spells[1] = ice;
+	spells[2] = heal;
+	spells[3] = barrier;
 
 	// Items
 	struct Item *potion;
@@ -59,10 +71,10 @@ int main()
 	ether->quantity = 1;
 	strcpy(ether->name, "Ether");
 
-	// Create array of items which can be iterated through to check quantity
-	struct Item *items[10] = { 0 };
-	items[0] = potion;
-	items[1] = ether;
+	// Create array of all items
+	//struct Item *items[10] = { 0 };
+	//items[0] = potion;
+	//items[1] = ether;
 
     // Create player character
     struct Player *player;

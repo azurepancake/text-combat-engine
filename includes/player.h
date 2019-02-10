@@ -1,5 +1,7 @@
 #ifndef __PLAYER_H
 #define __PLAYER_H
+#define SPELLS 3
+
 
 #include <stdio.h>
 #include <string.h>
@@ -20,6 +22,7 @@ struct Spell {
     char name[20];
     int dmg;
     int mp;
+	int learned;
 };
 
 struct Item {
