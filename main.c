@@ -41,14 +41,14 @@ int main()
 	heal = malloc(sizeof(struct Spell));
 	heal->dmg = -10;
 	heal->mp = 5;
-	heal->learned = 1;
+	heal->learned = 0;
 	strcpy(heal->name, "Heal");
 
 	struct Spell *barrier;
 	barrier = malloc(sizeof(struct Spell));
 	barrier->dmg = -10;
 	barrier->mp = 5;
-	barrier->learned = 0;
+	barrier->learned = 1;
 	strcpy(barrier->name, "Barrier");
 
 	// Create array of all spells
@@ -71,14 +71,21 @@ int main()
 	ether->quantity = 1;
 	strcpy(ether->name, "Ether");
 
+	struct Item *bomb;
+	bomb = malloc(sizeof(struct Item));
+	bomb->dmg = 25;
+	bomb->quantity = 1;
+	strcpy(bomb->name, "Bomb");
+
 	// Create array of all items
-	//struct Item *items[10] = { 0 };
-	//items[0] = potion;
-	//items[1] = ether;
+	struct Item *items[10] = { 0 };
+	items[0] = potion;
+	items[1] = ether;
+	items[2] = bomb;
 
     // Create player character
     struct Player *player;
-    player = setupPlayer(player, broadsword, skullcap, breastplate, spells);
+    player = setupPlayer(player, broadsword, skullcap, breastplate, spells, items);
 
 	// Create enemy non-player character
     struct Enemy *enemy;

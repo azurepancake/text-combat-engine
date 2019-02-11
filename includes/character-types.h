@@ -6,7 +6,7 @@ struct Player {
     struct Armor *head;
     struct Armor *chest;
     struct Spell **spells;
-	struct Item *items[10];
+	struct Item **items;
     char name[20];
     int level;
     int hp;
@@ -14,6 +14,7 @@ struct Player {
     int ap;
     int def;
     int totalDef;
+	int spellCount;
 };
 
 struct Enemy {
