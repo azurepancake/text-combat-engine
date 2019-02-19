@@ -1,9 +1,10 @@
 #include "intro.h"
 #include "caverns.h"
+#include "enemy.h"
+#include "player.h"
 
 int main()
 {
-
     // Weapons
     struct Weapon *dagger;
     dagger = malloc(sizeof(struct Weapon));
@@ -122,10 +123,9 @@ int main()
     player = setupPlayer(player, broadsword, skullcap, breastplate, spells, items, weapons, headarmor, chestarmor);
 
     // Create enemy non-player character
-    struct Spell *enemySpells[] = { fire, ice };
-    //struct Spell *enemySpells[] = { NULL };
-    struct Enemy *enemy;
-    enemy = setupEnemy(enemy, broadsword, enemySpells);
+    //struct Spell *enemySpells[] = { fire, ice };
+    //struct Enemy *enemy;
+    //enemy = setupEnemy(enemy, broadsword, enemySpells);
 
     // Setup spell pointers
     fire->playerAffects = &enemy->hp;
@@ -140,8 +140,15 @@ int main()
     ether->playerAffects = &player->mp;
     bomb->playerAffects = &enemy->hp;
 
+	// Setup inventory structure
+	struct Invetory *inventory;
+	inventory->weapons = weapons;
+	inventory->armor = armor;
+	inventory->items = items;
+	inventory->spells = spells;
+
 	startIntro();
-	startCaverns();
+	startCaverns(player);
 
 	return 0;
 }

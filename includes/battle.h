@@ -1,6 +1,6 @@
 #ifndef __BATTLE_H
 #define __BATTLE_H
 
-int battle();
+int battle(struct Player *player, struct Enemy *enemy);
 
 #endif

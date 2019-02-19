@@ -1,24 +1,11 @@
 #include "caverns.h"
 
-void northCaverns()
-{
-	;;
-}
-
-void southCaverns()
-{
-	;;
-}
-
-void eastCaverns()
-{
-	;;
-}
-
-void westCaverns()
+void westCaverns(struct Player *player)
 {
 	typeout("\nYou enter the darkness. Suddenly, a wooden club clumsily swings through the dark which you barely dodge. Prepare for battle.\n");
-	if(battle() == 1) {
+
+	// enter battle
+	if(battle(player, enemy) == 1) {
 		typeout("\nYou've defeated the beast that emerged from the cloak of darkness. You retrieve a stick of rough wood which the monster used as a weapon.\n\n");
         printf("What do you do?\n> ");
 
@@ -33,7 +20,7 @@ void westCaverns()
 	}
 }
 
-void westCavernsEntrace()
+void westCavernsEntrace(struct Player *player)
 {	
 	typeout("\nYou head towards the West, where you approach the large opening upon the outer wall. You hear the sound of whispers come from deep within the darkness.\n\n");
 	for(;;) {
@@ -47,7 +34,7 @@ void westCavernsEntrace()
 	    word = scanner(input, keywords, length);
 
 		if(strcmp(word, "enter") == 0) {
-			westCaverns();
+			westCaverns(player);
 		} else if(strcmp(word, "return") == 0) {
 			return;
 		} else {
@@ -56,7 +43,7 @@ void westCavernsEntrace()
 	}
 }
 
-void startCaverns()
+void startCaverns(struct Player *player)
 {
     printf("\nLoading caverns binary");
     typeout("........ ");
@@ -78,7 +65,7 @@ void startCaverns()
 	    if(strcmp(word, "east") == 0) {
 	        eastCaverns();
 	    } else if (strcmp(word, "west") == 0) {
-			westCavernsEntrace();
+			westCavernsEntrace(player);
 		} else if (strcmp(word, "north") == 0) {
 			northCaverns();
 		} else if (strcmp(word, "south") == 0) {

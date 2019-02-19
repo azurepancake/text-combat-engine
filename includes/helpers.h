@@ -8,6 +8,11 @@
 #include <string.h>
 #include "player.h"
 
+struct Inventory {
+    struct Weapons **weapons;
+    struct Armor **armor;
+};
+
 char *scanner(char *input, const char **keywords, int amount);
 int reverseNegative(int x);
 int randRange(int low, int high);
