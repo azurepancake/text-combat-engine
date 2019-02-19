@@ -7,10 +7,10 @@ int battle(struct Player *player, struct Enemy *enemy)
 {
 	printf("\n//// F I G H T ////");
 
-    // Enter main loop
-    int state = 0;
+	// Enter main loop
+	int state = 0;
 
-    while(state == 0) {
+	while(state == 0) {
 	printf("\n"); // without this, enemy loops over and over.. weird..
 	state = playersTurn(player, enemy);
   
