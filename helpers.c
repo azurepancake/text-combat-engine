@@ -1,5 +1,69 @@
 #include "helpers.h"
 
+char *scanner(char *input, const char **keywords, int amount)
+{
+    int i;
+    int count;
+
+    char word[MAX_INPUT_SZ];
+    count = 0;
+
+    // loop through input string
+    for(i = 0; i <= strlen(input); i++) {
+
+        // add characters into word array until we hit a space (indicating end of word)
+        if(input[i] != ' ') {
+            // if we hit a new line character, skip it
+            if(input[i] == '\n') {
+                continue;
+            }
+            word[count] = input[i];
+            count++;
+        }
+
+        // if we hit space or \0, we have a full word
+        if(input[i] == ' ' || input[i] == '\0') {
+            word[count] = '\0';
+
+            // iterate through keywords and find match
+            for(int i = 0; i <= amount; i++) {
+                if(strcmp(word, keywords[i]) == 0) {
+                    free(input);
+                    return (char *)keywords[i];
+                }
+            }
+
+            // if no match, return appropriate value
+
+            count = 0;
+            memset(word, 0, MAX_INPUT_SZ);
+        }
+    }
+    free(input);
+    return "nomatch";
+}
+
+void typeout(char *text)
+{
+    int length;
+    length = strlen(text);
+
+    for(int i = 0; i < length; i++) {
+        usleep(50000);
+        putchar(text[i]);
+        fflush(stdout);
+    }
+}
+
+int reverseNegative(int x)
+{
+	if(x <= 0) {
+		x = x * -1;
+	}
+
+	return x;
+}
+
 int randRange(int low, int high)
 {
     srand(time(NULL));
