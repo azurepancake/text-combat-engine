@@ -2,59 +2,59 @@
 
 struct Player *setupPlayer(struct Player *player, struct Weapon *weapon, struct Armor *head, struct Armor *chest, struct Spell **spells, struct Item **items, struct Weapon **weapons, struct Armor **headarmor, struct Armor **chestarmor)
 {
-    player = malloc(sizeof(struct Player)); // need error checking
-    strcpy(player->name, "Player");
+	player = malloc(sizeof(struct Player)); // need error checking
+	strcpy(player->name, "Player");
 	player->totalhp = STARTHP;
 	player->totalmp = STARTMP;
-    player->hp = STARTHP;
-    player->mp = STARTMP;
-    player->ap = STARTAP;;
-    player->def = STARTDEF;
-    player->weapon = weapon;
-    player->head = head;
-    player->chest = chest;
-    player->totalDef = player->def + player->head->def + player->chest->def;
+	player->hp = STARTHP;
+	player->mp = STARTMP;
+	player->ap = STARTAP;;
+	player->def = STARTDEF;
+	player->weapon = weapon;
+	player->head = head;
+	player->chest = chest;
+	player->totalDef = player->def + player->head->def + player->chest->def;
 	player->weapons = weapons;
 	player->headarmor = headarmor;
 	player->chestarmor = chestarmor;
-    player->spells = spells;
-    player->items = items;
+	player->spells = spells;
+	player->items = items;
 
-    return player;
+	return player;
 }
 
 int playerAttack(struct Player *player, struct Enemy *enemy)
 {
-    int dmg = randRange(player->weapon->mindmg, player->weapon->maxdmg) + player->ap; 
-    printf("\n-> %s attacks for %d!\n", player->name, dmg);
-    enemy->hp -= dmg;
+	int dmg = randRange(player->weapon->mindmg, player->weapon->maxdmg) + player->ap; 
+	printf("\n-> %s attacks for %d!\n", player->name, dmg);
+	enemy->hp -= dmg;
 
 	return 1;
 }
 
 int playerSpell(struct Player *player, struct Enemy *enemy)
 {
-    printf("\n----------\n");
-    printf("Spells");
-    printf("\n----------\n");
-    
+	printf("\n----------\n");
+	printf("Spells");
+	printf("\n----------\n");
+	
 	int count = 0; 
 	for(int i = 0; i <= SPELLS; i++) {
-        if(player->spells[i]->learned == 0) {
-            continue;
-        }
+		if(player->spells[i]->learned == 0) {
+			continue;
+		}
 
 		count++;
 		player->spells[i]->index = count; // map the actual array index to the menu number
-        printf("%d) %s (%d MP)\n", count, player->spells[i]->name, player->spells[i]->mp);
-    }
+		printf("%d) %s (%d MP)\n", count, player->spells[i]->name, player->spells[i]->mp);
+	}
 
 	int exit = count + 1;	
 	printf("%d) Return\n", exit);
 
-    int choice;
-    printf("> ");
-    scanf("%d", &choice);
+	int choice;
+	printf("> ");
+	scanf("%d", &choice);
 
 	if(choice == exit) {
 		return 0;
@@ -70,7 +70,7 @@ int playerSpell(struct Player *player, struct Enemy *enemy)
 			}
 			int dmg = reverseNegative(player->spells[i]->dmg);
 			printf("\n-> %s casts %s for %d!\n", player->name, player->spells[i]->name, dmg);
-    		player->mp -= player->spells[i]->mp;
+			player->mp -= player->spells[i]->mp;
 			*player->spells[i]->playerAffects -= player->spells[i]->dmg;
 		}
 	}
@@ -104,16 +104,16 @@ int playerItem(struct Player *player, struct Enemy *enemy)
 		printf("%d) %s (%d)\n", count, player->items[i]->name, player->items[i]->quantity);
 	}
 
-    int exit = count + 1;
-    printf("%d) Return\n", exit);
+	int exit = count + 1;
+	printf("%d) Return\n", exit);
 
 	int choice;
 	printf("> ");
 	scanf("%d", &choice);
 
-    if(choice == exit) {
-        return 0;
-    }
+	if(choice == exit) {
+		return 0;
+	}
 
 	// Can't pick out of range number
 	if(choice > count) {
@@ -129,7 +129,7 @@ int playerItem(struct Player *player, struct Enemy *enemy)
 				return 0;
 			}
 			int dmg = reverseNegative(player->items[i]->dmg);
-	 		printf("\n-> You use a %s for %d!\n", player->items[i]->name, dmg);
+			printf("\n-> You use a %s for %d!\n", player->items[i]->name, dmg);
 			player->items[i]->quantity--;
 			*player->items[i]->playerAffects -= player->items[i]->dmg;
 		}
@@ -140,9 +140,9 @@ int playerItem(struct Player *player, struct Enemy *enemy)
 void changeWeapon(struct Player *player)
 {
 	int choice;
-    printf("\n----------\n");
-    printf("Weapons");
-    printf("\n----------\n");
+	printf("\n----------\n");
+	printf("Weapons");
+	printf("\n----------\n");
 
 	int count = 0;
 	for(int i = 0; i <= WEAPONS; i++) {
@@ -165,8 +165,8 @@ void changeWeapon(struct Player *player)
 		return;
 	}
 
-    for(int i = 0; i <= WEAPONS; i++) {
-        if(player->weapons[i]->index == choice) {
+	for(int i = 0; i <= WEAPONS; i++) {
+		if(player->weapons[i]->index == choice) {
 			player->weapon = player->weapons[i];
 			printf("\n-> You equip a %s.\n", player->weapon->name);
 			return;
@@ -176,10 +176,10 @@ void changeWeapon(struct Player *player)
 
 void changeHead(struct Player *player)
 {
-    int choice;
-    printf("\n----------\n");
-    printf("Head Armor");
-    printf("\n----------\n");
+	int choice;
+	printf("\n----------\n");
+	printf("Head Armor");
+	printf("\n----------\n");
 
 	int count = 0;
 	for(int i = 0; i <= HEADARMOR; i++) {
@@ -214,9 +214,9 @@ void changeHead(struct Player *player)
 void changeChest(struct Player *player)
 {
 	int choice;
-    printf("\n----------\n");
-    printf("Chest Armor");
-    printf("\n----------\n");
+	printf("\n----------\n");
+	printf("Chest Armor");
+	printf("\n----------\n");
 
 	int count = 0;
 	for(int i = 0; i <= CHESTARMOR; i++) {
@@ -253,8 +253,8 @@ int playerEquip(struct Player *player)
 	int state;
 	for(;;) {
 		int choice;
-        printf("\n----------\n");
-        printf("Statistics");
+		printf("\n----------\n");
+		printf("Statistics");
 		printf("\n----------\n");
 		printf("HP: %d / %d\n", player->hp, player->totalhp);
 		printf("MP: %d / %d\n", player->mp, player->totalmp);
@@ -302,35 +302,35 @@ int playersTurn(struct Player *player, struct Enemy *enemy)
 
 	int state;
 	while(state != 1) {
-	    int choice;
-	    printf("\n----------\n");
-	    printf("%s", player->name);
-	    printf("\n----------\n");
-	    printf("HP: %d\n", player->hp);
-	    printf("MP: %d\n", player->mp);
-	    printf("----------\n");
-	    printf("1) Attack\n");
-	    printf("2) Magic\n");
-	    printf("3) Item\n");
-	    printf("4) Equip\n");
-	    printf("> ");
-	    scanf("%d", &choice);
+		int choice;
+		printf("\n----------\n");
+		printf("%s", player->name);
+		printf("\n----------\n");
+		printf("HP: %d\n", player->hp);
+		printf("MP: %d\n", player->mp);
+		printf("----------\n");
+		printf("1) Attack\n");
+		printf("2) Magic\n");
+		printf("3) Item\n");
+		printf("4) Equip\n");
+		printf("> ");
+		scanf("%d", &choice);
 
-	    switch(choice)
-	    {
-    	    case 0: return 1;
-        	    break;
-	        case 1: state = playerAttack(player, enemy);
-	            break;
-	        case 2: state = playerSpell(player, enemy);
-	            break;
-	        case 3: state = playerItem(player, enemy);
-	            break;
+		switch(choice)
+		{
+			case 0: return 1;
+				break;
+			case 1: state = playerAttack(player, enemy);
+				break;
+			case 2: state = playerSpell(player, enemy);
+				break;
+			case 3: state = playerItem(player, enemy);
+				break;
 			case 4: state = playerEquip(player);
 				break;
-	        default: printf("\n-> Invalid choice.\n");
-	            break;
-	    }
+			default: printf("\n-> Invalid choice.\n");
+				break;
+		}
 	}
 
 	if(enemy->hp <= 0) {
@@ -338,5 +338,5 @@ int playersTurn(struct Player *player, struct Enemy *enemy)
 		return 1;
 	}
 
-    return 0;
+	return 0;
 }

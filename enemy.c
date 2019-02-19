@@ -2,22 +2,22 @@
 
 struct Enemy *setupEnemy(struct Enemy *enemy, struct Weapon *weapon, struct Spell **spells)
 {
-    enemy = malloc(sizeof(struct Enemy)); // need error checking
-    strcpy(enemy->name, "Grunt");
-    enemy->hp = 100;
-    enemy->mp = 100;
-    enemy->dmg = 4;
+	enemy = malloc(sizeof(struct Enemy)); // need error checking
+	strcpy(enemy->name, "Grunt");
+	enemy->hp = 100;
+	enemy->mp = 100;
+	enemy->dmg = 4;
 	enemy->weapon = weapon;
 	enemy->spells = spells;
 
-    return enemy;
+	return enemy;
 }
 
 void enemyAttack(struct Player *player, struct Enemy *enemy)
 {
-    int dmg = randRange(enemy->weapon->mindmg, enemy->weapon->maxdmg);
-    printf("-> %s attacks for %d!\n", enemy->name, dmg);
-    player->hp -= dmg;
+	int dmg = randRange(enemy->weapon->mindmg, enemy->weapon->maxdmg);
+	printf("-> %s attacks for %d!\n", enemy->name, dmg);
+	player->hp -= dmg;
 }
 
 void enemySpell(struct Player *player, struct Enemy *enemy)
@@ -41,7 +41,7 @@ int enemysTurn(struct Player *player, struct Enemy *enemy)
 	int choice;
 	choice = randRange(1, 10);
 	if(choice < 8) {
-    	enemyAttack(player, enemy);
+		enemyAttack(player, enemy);
 	} else {
 		enemySpell(player, enemy);
 	}

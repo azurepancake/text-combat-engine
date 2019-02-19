@@ -12,5 +12,4 @@ void startCaverns(struct Player *player);
 void westCavernsEntrace(struct Player *player);
 void westCaverns(struct Player *player);
 
-
 #endif

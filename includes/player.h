@@ -20,26 +20,26 @@
 #include "helpers.h"
 
 struct Weapon {
-    char name[20];
-    int mindmg;
+	char name[20];
+	int mindmg;
 	int maxdmg;
 	int owned;
 	int index;
 };
 
 struct Armor {
-    char name[20];
-    int def;
+	char name[20];
+	int def;
 	int owned;
 	int index;
 };
 
 struct Spell {
-    char name[20];
+	char name[20];
 	int *playerAffects;
 	int *enemyAffects;
-    int dmg;
-    int mp;
+	int dmg;
+	int mp;
 	int learned;
 	int index;
 };
