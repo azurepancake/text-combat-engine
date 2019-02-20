@@ -2,6 +2,7 @@
 #include "caverns.h"
 #include "enemy.h"
 #include "player.h"
+#include "helpers.h"
 
 int main()
 {
@@ -13,22 +14,29 @@ int main()
 	dagger->owned = 1;
 	strcpy(dagger->name, "Dagger");
 
+	struct Weapon *stick;
+	stick = malloc(sizeof(struct Weapon));
+	stick->mindmg = 3;
+	stick->maxdmg = 4;
+	stick->owned = 0;
+	strcpy(stick->name, "Wooden Stick");
+
 	struct Weapon *broadsword;
 	broadsword = malloc(sizeof(struct Weapon));
 	broadsword->mindmg = 3;
 	broadsword->maxdmg = 8;
-	broadsword->owned = 1;
+	broadsword->owned = 0;
 	strcpy(broadsword->name, "Broadsword");
 
 	struct Weapon *longsword;
 	longsword = malloc(sizeof(struct Weapon));
 	longsword->mindmg = 10;
 	longsword->maxdmg = 20;
-	longsword->owned = 1;
+	longsword->owned = 0;
 	strcpy(longsword->name, "Longsword");
 
 	// Create an array of all weapons
-	struct Weapon *weapons[] = { dagger, broadsword, longsword };
+	struct Weapon *weapons[] = { dagger, stick, broadsword, longsword };
 
 	// Head armor
 	struct Armor *skullcap;
@@ -122,33 +130,17 @@ int main()
 	struct Player *player;
 	player = setupPlayer(player, broadsword, skullcap, breastplate, spells, items, weapons, headarmor, chestarmor);
 
-	// Create enemy non-player character
-	//struct Spell *enemySpells[] = { fire, ice };
-	//struct Enemy *enemy;
-	//enemy = setupEnemy(enemy, broadsword, enemySpells);
-
-	// Setup spell pointers
-	fire->playerAffects = &enemy->hp;
-	fire->enemyAffects = &player->hp;
-	ice->playerAffects = &enemy->hp;
-	ice->enemyAffects = &player->hp;
-	heal->playerAffects = &player->hp;
-	heal->enemyAffects = &enemy->hp;
-
-	// Setup item pointers
-	potion->playerAffects = &player->hp;
-	ether->playerAffects = &player->mp;
-	bomb->playerAffects = &enemy->hp;
-
 	// Setup inventory structure
-	struct Invetory *inventory;
+	struct Inventory *inventory;
+	inventory = malloc(sizeof(struct Inventory));
 	inventory->weapons = weapons;
-	inventory->armor = armor;
+	inventory->headarmor = headarmor;
+	inventory->chestarmor = chestarmor;
 	inventory->items = items;
 	inventory->spells = spells;
 
 	startIntro();
-	startCaverns(player);
+	startCaverns(player, inventory);
 
 	return 0;
 }

@@ -63,5 +63,4 @@ void changeWeapon(struct Player *player);
 void changeHead(struct Player *player);
 void changeChest(struct Player *player);
 
-
 #endif

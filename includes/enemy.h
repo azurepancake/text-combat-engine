@@ -6,7 +6,7 @@
 #include "character-types.h"
 #include "helpers.h"
 
-struct Enemy *setupEnemy(struct Enemy *enemy, struct Weapon *weapon, struct Spell **spells);
+struct Enemy *setupEnemy(struct Enemy *enemy, struct Weapon *weapon, struct Spell **spells, struct Inventory *inventory, struct Player *player);
 void enemysAttack(struct Player *player, struct Enemy *enemy);
 int enemysTurn(struct Player *player, struct Enemy *enemy);
 

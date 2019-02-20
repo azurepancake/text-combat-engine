@@ -1,6 +1,6 @@
 #include "enemy.h"
 
-struct Enemy *setupEnemy(struct Enemy *enemy, struct Weapon *weapon, struct Spell **spells)
+struct Enemy *setupEnemy(struct Enemy *enemy, struct Weapon *weapon, struct Spell **spells, struct Inventory *inventory, struct Player *player)
 {
 	enemy = malloc(sizeof(struct Enemy)); // need error checking
 	strcpy(enemy->name, "Grunt");
@@ -9,6 +9,19 @@ struct Enemy *setupEnemy(struct Enemy *enemy, struct Weapon *weapon, struct Spel
 	enemy->dmg = 4;
 	enemy->weapon = weapon;
 	enemy->spells = spells;
+
+	// Setup spell pointers
+	inventory->spells[0]->enemyAffects = &player->hp;
+	inventory->spells[1]->enemyAffects = &player->hp;
+	inventory->spells[2]->enemyAffects = &enemy->hp;
+    inventory->spells[0]->playerAffects = &enemy->hp;
+    inventory->spells[1]->playerAffects = &enemy->hp;
+    inventory->spells[2]->playerAffects = &player->hp;
+
+    // Setup item pointers
+    inventory->items[0]->playerAffects = &player->hp;
+    inventory->items[1]->playerAffects = &player->mp;
+    inventory->items[2]->playerAffects = &enemy->hp;
 
 	return enemy;
 }

@@ -9,8 +9,11 @@
 #include "player.h"
 
 struct Inventory {
-	struct Weapons **weapons;
-	struct Armor **armor;
+	struct Weapon **weapons;
+	struct Armor **headarmor;
+	struct Armor **chestarmor;
+	struct Spell **spells;
+	struct Item **items;
 };
 
 char *scanner(char *input, const char **keywords, int amount);

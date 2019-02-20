@@ -8,8 +8,14 @@
 #include "helpers.h"
 #include "battle.h"
 
-void startCaverns(struct Player *player);
-void westCavernsEntrace(struct Player *player);
-void westCaverns(struct Player *player);
+struct Caverns {
+	int phaseone;
+	int phasetwo;
+	int phasethree;
+};
+
+void startCaverns(struct Player *player, struct Inventory *inventory);
+void westCavernsEntrace(struct Player *player, struct Inventory *inventory, struct Caverns *caverns);
+void westCaverns(struct Player *player, struct Inventory *inventory, struct Caverns *caverns);
 
 #endif

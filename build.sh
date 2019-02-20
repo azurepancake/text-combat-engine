@@ -9,3 +9,6 @@ gcc -c battle.c -I./includes/
 gcc -c intro.c -I./includes/
 gcc -c caverns.c -I./includes/
 gcc -o main main.c -I./includes/ helpers.o player.o enemy.o battle.o intro.o caverns.o
+
+# clean up object files
+rm *.o
