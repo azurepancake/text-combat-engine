@@ -17,5 +17,7 @@ struct Caverns {
 void startCaverns(struct Player *player, struct Inventory *inventory);
 void westCavernsEntrace(struct Player *player, struct Inventory *inventory, struct Caverns *caverns);
 void westCaverns(struct Player *player, struct Inventory *inventory, struct Caverns *caverns);
+void northCavernsEntrance(struct Player *player, struct Inventory *inventory, struct Caverns *caverns);
+void iceBoss(struct Player *player, struct Inventory *inventory);
 
 #endif
