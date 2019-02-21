@@ -35,9 +35,11 @@ void enemyAttack(struct Player *player, struct Enemy *enemy)
 
 void enemySpell(struct Player *player, struct Enemy *enemy)
 {
+	int choice = 0;
 	int length = sizeof(enemy->spells) / sizeof(*enemy->spells);
-	int choice;
-	choice = randRange(0, length);
+	if(length > 1) {
+		choice = randRange(0, length);
+	}
 	printf("-> %s casts %s for %d!\n", enemy->name, enemy->spells[choice]->name, enemy->spells[choice]->dmg);
 	*enemy->spells[choice]->enemyAffects -= player->spells[choice]->dmg;
 }

@@ -3,18 +3,18 @@
 
 void iceBoss(struct Player *player, struct Inventory *inventory)
 {
-		typeout("\nYou attempt to open the chest, however a large beast of ice forms before your very eyes. Prepare for battle.\n");
+	typeout("\nYou attempt to open the chest, however a large beast of ice forms before your very eyes. Prepare for battle.\n");
 	
-		// Create enemy non-player character
-		struct Spell *enemySpells[] = { inventory->spells[1] };
-		struct Enemy *enemy;
-		enemy = setupEnemy(enemy, inventory->weapons[0], enemySpells, inventory, player);
+	// Create enemy non-player character
+	struct Spell *enemySpells[] = { inventory->spells[1] };
+	struct Enemy *enemy;
+	enemy = setupEnemy(enemy, inventory->weapons[0], enemySpells, inventory, player);
 
-		if(battle(player, enemy) == 0) {
-			return;
-		} else {
-			return;
-		}
+	if(battle(player, enemy) == 0) {
+		return;
+	} else {
+		return;
+	}
 }
 
 void westCaverns(struct Player *player, struct Inventory *inventory, struct Caverns *caverns)
@@ -33,7 +33,6 @@ void westCaverns(struct Player *player, struct Inventory *inventory, struct Cave
 			typeout("\nYou've defeated the beast that emerged from the cloak of darkness. You retrieve a stick of rough wood which the monster used as a weapon.");
 			inventory->weapons[1]->owned = 1; // you get a stick!
 			getchar();
-
 			return;
 		} else {
 			return;
@@ -110,7 +109,7 @@ void startCaverns(struct Player *player, struct Inventory *inventory)
 	printf("\nLoading caverns binary");
 	typeout("........ ");
 	printf("OK!\n\n\n");
-	printf("//// T H E	C A V E R N S ////\n");
+	printf("//// T H E  C A V E R N S ////\n");
 
 	for(;;) {
 		printf("\nYou now stand at the southern end of a large cavern.. Around the outskirts of the main area which you stand are passage ways:\n\nThe passage to the East appears to be closed off by large, thick vines.\n\nThe passage to the North is blocked by raging flames.\n\nThe passage to the West is gaping wide open, however is full of darkness.");
@@ -121,15 +120,13 @@ void startCaverns(struct Player *player, struct Inventory *inventory)
 		word = scanner(keywords, length);
 
 		if(strcmp(word, "east") == 0) {
-			//eastCaverns();
-			;;
+			;; //eastCaverns();
 		} else if (strcmp(word, "west") == 0) {
 			westCavernsEntrace(player, inventory, caverns);
 		} else if (strcmp(word, "north") == 0) {
 			northCavernsEntrance(player, inventory, caverns);
 		} else if (strcmp(word, "south") == 0) {
-			//southCaverns();
-			;;
+			;; //southCaverns();
 		} else {
 			printf("\nPlease try again..\n");
 		}
