@@ -74,21 +74,21 @@ int main()
 	fire = malloc(sizeof(struct Spell));
 	fire->dmg = 10;
 	fire->mp = 5;
-	fire->learned = 1;
+	fire->learned = 0;
 	strcpy(fire->name, "Fire");
 
 	struct Spell *ice;
 	ice = malloc(sizeof(struct Spell));
 	ice->dmg = 5;
 	ice->mp = 5;
-	ice->learned = 1;
+	ice->learned = 0;
 	strcpy(ice->name, "Ice");
 
 	struct Spell *heal;
 	heal = malloc(sizeof(struct Spell));
 	heal->dmg = -10;
 	heal->mp = 5;
-	heal->learned = 1;
+	heal->learned = 0;
 	strcpy(heal->name, "Heal");
 
 	struct Spell *barrier;

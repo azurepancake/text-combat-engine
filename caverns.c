@@ -1,7 +1,7 @@
 #include "caverns.h"
 #include "enemy.h"
 
-void iceBoss(struct Player *player, struct Inventory *inventory)
+void iceBoss(struct Player *player, struct Inventory *inventory, struct Caverns *caverns)
 {
 	typeout("\nYou attempt to open the chest, however a large beast of ice forms before your very eyes. Prepare for battle.\n");
 	
@@ -11,6 +11,9 @@ void iceBoss(struct Player *player, struct Inventory *inventory)
 	enemy = setupEnemy(enemy, inventory->weapons[0], enemySpells, inventory, player);
 
 	if(battle(player, enemy) == 0) {
+		typeout("\nYou've defeated the beast formed of ice. You open the treasure chest and find an ancient scroll. You feel the power of ice flow through you..\n\nYou learn the spell 'Ice'.");
+		inventory->spells[1]->learned = 1;
+		caverns->phasethree = 1;
 		return;
 	} else {
 		return;
@@ -37,16 +40,17 @@ void westCaverns(struct Player *player, struct Inventory *inventory, struct Cave
 		} else {
 			return;
 		}
+
 	} else if (caverns->phasetwo == 1) {
 		typeout("\nUsing your torch, you navigate through the passage way. The air begins to feel chill and you notice ice forming upon the walls.\n\nYou enter an icy chamber, in the center of the room sits a large treasure chest.");
 		for(;;) {
 			char *word;
 			const char *keywords[2] = { "open", "return" };
-			int length = (sizeof(keywords) / sizeof(*keywords)) - 1;
+			int length = (sizeof(keywords) / sizeof(*keywords));
 			word = scanner(keywords, length);
 
 			if(strcmp(word, "open") == 0) {
-				iceBoss(player, inventory);
+				iceBoss(player, inventory, caverns);
 			} else if(strcmp(word, "return") == 0) {
 				return;
 			} else {
@@ -59,11 +63,10 @@ void westCaverns(struct Player *player, struct Inventory *inventory, struct Cave
 void northCavernsEntrance(struct Player *player, struct Inventory *inventory, struct Caverns *caverns)
 {
 	typeout("\nYou head towards the Northern area of the cavern. Standing before the bellowing flames of the opening, you feel the scortching heat upon your skin. It is impossible to pass.");
-
 	for(;;) {
 		char *word;
 		const char *keywords[5] = { "enter", "return", "stick", "fire", "light" };
-		int length = (sizeof(keywords) / sizeof(*keywords)) - 1;
+		int length = (sizeof(keywords) / sizeof(*keywords));
 		word = scanner(keywords, length);
 
 		if(strcmp(word, "enter") == 0) {
@@ -85,7 +88,7 @@ void westCavernsEntrace(struct Player *player, struct Inventory *inventory, stru
 	for(;;) {
 		char *word;
 		const char *keywords[2] = { "enter", "return" };
-		int length = (sizeof(keywords) / sizeof(*keywords)) - 1;
+		int length = (sizeof(keywords) / sizeof(*keywords));
 		word = scanner(keywords, length);
 
 		if(strcmp(word, "enter") == 0) {
@@ -116,7 +119,7 @@ void startCaverns(struct Player *player, struct Inventory *inventory)
 
 		char *word;
 		const char *keywords[4] = { "north", "east", "south", "west" };
-		int length = (sizeof(keywords) / sizeof(*keywords)) - 1;
+		int length = (sizeof(keywords) / sizeof(*keywords));
 		word = scanner(keywords, length);
 
 		if(strcmp(word, "east") == 0) {
