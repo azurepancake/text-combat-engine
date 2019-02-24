@@ -5,13 +5,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "helpers.h"
 #include "battle.h"
+#include "enemy.h"
 
 struct Caverns {
-	int phaseone;
-	int phasetwo;
-	int phasethree;
+	bool phaseone;
+	bool phasetwo;
+	bool phasethree;
+	char *hint;
 };
 
 void startCaverns(struct Player *player, struct Inventory *inventory);

@@ -119,7 +119,7 @@ int main()
 	struct Item *bomb;
 	bomb = malloc(sizeof(struct Item));
 	bomb->dmg = 25;
-	bomb->quantity = 4;
+	bomb->quantity = 25;
 	bomb->index = 2;
 	strcpy(bomb->name, "Bomb");
 
@@ -128,7 +128,7 @@ int main()
 
 	// Create player character
 	struct Player *player;
-	player = setupPlayer(player, broadsword, skullcap, breastplate, spells, items, weapons, headarmor, chestarmor);
+	player = setupPlayer(player, dagger, skullcap, breastplate, spells, items, weapons, headarmor, chestarmor);
 
 	// Setup inventory structure
 	struct Inventory *inventory;
@@ -139,7 +139,7 @@ int main()
 	inventory->items = items;
 	inventory->spells = spells;
 
-	startIntro();
+	//startIntro();
 	startCaverns(player, inventory);
 
 	return 0;

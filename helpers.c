@@ -1,13 +1,29 @@
 #include "helpers.h"
 
-/* Let's hold onto this one for a bit..
-char *scanner(char *input, const char **keywords, int amount)
+void help(char *hint)
 {
-	int i;
-	int count;
+	printf("\n----------\n");
+	printf("Help:");
+	printf("\n----------\n");
+	printf("Enter words to describe what you want to do.\n\n");
+	printf("Hint: %s\n\n", hint);
+	printf("There are several keywords you can use anywhere:\n");
+	printf("* return -> Return to previous area\n");
+	printf("* equip -> Manage your equipment\n");
+	printf("* items -> Manage your items\n");
+	printf("* magic -> Manage your spells\n");
+	printf("* locate -> Describe your immediate environment");
+}
+
+char *scanner(const char **keywords, int amount)
+{
+	printf("\n\nWhat do you do?\n> ");
+	char *input = malloc(MAX_INPUT_SZ);
+	fgets(input, MAX_INPUT_SZ, stdin);
 
 	char word[MAX_INPUT_SZ];
-	count = 0;
+	int count = 0;
+	int i;
 
 	// loop through input string
 	for(i = 0; i <= strlen(input); i++) {
@@ -27,14 +43,13 @@ char *scanner(char *input, const char **keywords, int amount)
 			word[count] = '\0';
 
 			// iterate through keywords and find match
-			for(int i = 0; i <= amount; i++) {
+			for(int i = 0; i < amount; i++) {
+
 				if(strcmp(word, keywords[i]) == 0) {
 					free(input);
 					return (char *)keywords[i];
 				}
 			}
-
-			// if no match, return appropriate value
 
 			count = 0;
 			memset(word, 0, MAX_INPUT_SZ);
@@ -42,50 +57,6 @@ char *scanner(char *input, const char **keywords, int amount)
 	}
 	free(input);
 	return "nomatch";
-}
-*/
-
-char *scanner(const char **keywords, int amount)
-{
-    printf("\n\nWhat do you do?\n> ");
-    char *input = malloc(MAX_INPUT_SZ);
-    fgets(input, MAX_INPUT_SZ, stdin);
-
-    char word[MAX_INPUT_SZ];
-    int count = 0;
-    int i;
-
-    // loop through input string
-    for(i = 0; i <= strlen(input); i++) {
-
-        // add characters into word array until we hit a space (indicating end of word)
-        if(input[i] != ' ') {
-            // if we hit a new line character, skip it
-            if(input[i] == '\n') {
-                continue;
-            }
-            word[count] = input[i];
-            count++;
-        }
-
-        // if we hit space or \0, we have a full word
-        if(input[i] == ' ' || input[i] == '\0') {
-            word[count] = '\0';
-
-            // iterate through keywords and find match
-            for(int i = 0; i <= amount; i++) {
-                if(strcmp(word, keywords[i]) == 0) {
-                    free(input);
-                    return (char *)keywords[i];
-                }
-            }
-
-            count = 0;
-            memset(word, 0, MAX_INPUT_SZ);
-        }
-    }
-    free(input);
-    return "nomatch";
 }
 
 void typeout(char *text)

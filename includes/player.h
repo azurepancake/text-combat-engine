@@ -9,8 +9,8 @@
 #define ITEMS 2
 
 // Player start stats
-#define STARTHP 30
-#define STARTMP 30
+#define STARTHP 100
+#define STARTMP 100
 #define STARTAP 3
 #define STARTDEF 3
 

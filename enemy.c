@@ -47,7 +47,7 @@ void enemySpell(struct Player *player, struct Enemy *enemy)
 int enemysTurn(struct Player *player, struct Enemy *enemy)
 {
 	// if no spells, just attack
-	if(enemy->spells[0] == NULL) {
+	if(enemy->spells[0] == 0) {
 		enemyAttack(player, enemy);
 		return 0;
 	}

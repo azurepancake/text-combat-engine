@@ -302,7 +302,6 @@ int playersTurn(struct Player *player, struct Enemy *enemy)
 
 	int state;
 	while(state != 1) {
-		int choice;
 		printf("\n----------\n");
 		printf("%s", player->name);
 		printf("\n----------\n");
@@ -312,8 +311,8 @@ int playersTurn(struct Player *player, struct Enemy *enemy)
 		printf("1) Attack\n");
 		printf("2) Magic\n");
 		printf("3) Item\n");
-		printf("4) Equip\n");
 		printf("> ");
+		int choice;
 		scanf("%d", &choice);
 
 		switch(choice)
@@ -325,8 +324,6 @@ int playersTurn(struct Player *player, struct Enemy *enemy)
 			case 2: state = playerSpell(player, enemy);
 				break;
 			case 3: state = playerItem(player, enemy);
-				break;
-			case 4: state = playerEquip(player);
 				break;
 			default: printf("\n-> Invalid choice.\n");
 				break;
