@@ -14,6 +14,7 @@ struct Caverns {
 	bool phaseone;
 	bool phasetwo;
 	bool phasethree;
+	bool phasefour;
 	char *hint;
 };
 
@@ -21,6 +22,7 @@ void startCaverns(struct Player *player, struct Inventory *inventory);
 void westCavernsEntrace(struct Player *player, struct Inventory *inventory, struct Caverns *caverns);
 void westCaverns(struct Player *player, struct Inventory *inventory, struct Caverns *caverns);
 void northCavernsEntrance(struct Player *player, struct Inventory *inventory, struct Caverns *caverns);
+void northCaverns(struct Player *player, struct Inventory *inventory, struct Caverns *caverns);
 void iceBoss(struct Player *player, struct Inventory *inventory, struct Caverns *caverns);
-
+void fireBoss(struct Player *player, struct Inventory *inventory, struct Caverns *caverns);
 #endif
