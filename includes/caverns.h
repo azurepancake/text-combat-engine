@@ -15,6 +15,7 @@ struct Caverns {
 	bool phasetwo;
 	bool phasethree;
 	bool phasefour;
+	bool phasefive;
 	char *hint;
 };
 

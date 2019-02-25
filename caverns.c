@@ -44,22 +44,19 @@ void westCaverns(struct Player *player, struct Inventory *inventory, struct Cave
 			return;
 		}
 
-	} else if (caverns->phaseone && ! caverns->phasetwo) {
-		typeout("\nYou do not dare enter that darkness again without a torch..\n");
-		return;
-
 	} else if (caverns->phasetwo) {
 		bool locate = 1;
 		for(;;) {
 			if(locate) {
-				typeout("\nUsing your torch, you navigate through the passage way. The air begins to feel chill and you notice ice forming upon the walls.\n\nYou enter an icy chamber, ");
+				typeout("\n\nYou now stand inside of an icy chamber. ");
 				if(! caverns->phasethree) {
-					typeout("in the center of the room sits a large treasure chest.");
+					typeout("In the center of the room sits a large treasure chest.");
 				} else if(caverns->phasethree) {
-					typeout("in the center of the room sits the empty treasure chest.");
+					typeout("In the center of the room sits the empty treasure chest.");
 				}
 			}
 			locate = 0;
+
 			char *word;
 			const char *keywords[] = { "open", "return", "help", "locate" };
 			int length = (sizeof(keywords) / sizeof(*keywords));
@@ -95,10 +92,10 @@ void fireBoss(struct Player *player, struct Inventory *inventory, struct Caverns
 
     if(battle(player, enemy)) {
         getchar();
-        caverns->phasethree = 1;
+        caverns->phasefive = 1;
         caverns->hint = "Opposites attract..";
         inventory->spells[Fire]->learned = 1;
-        typeout("\nYou've defeated the beast formed of fire. You open the treasure chest and find an ancient scroll. You feel the power of ice flow through you..\n\nYou learn the spell 'Fire'.\n");
+        typeout("\nYou've defeated the beast formed of fire. You open the treasure chest and find an ancient scroll. You feel the power of fire flow through you..\n\nYou learn the spell 'Fire'.");
         return;
     } else {
         return;
@@ -110,17 +107,28 @@ void northCaverns(struct Player *player, struct Inventory *inventory, struct Cav
 	bool locate = 1;
 	for(;;) {
 		if(locate) {
-			typeout("\nYou enter the Northern cavern passageway.. ");
-			typeout("Inside the cavern, you find a treasure chest.");
+			typeout("\nYou now stand inside of a chamber of flames. ");
+			if(! caverns->phasefive) {
+				typeout("In the center of the room sits a large treasure chest.");
+			} else if(caverns->phasefive) {
+				typeout("In the center of the room sits the empty treasure chest.");
+			}
 		}
+		locate = 0;
 
 		char *word;
-		const char *keywords[] = { "open", "return" };
+		const char *keywords[] = { "open", "return", "locate" };
 		int length = (sizeof(keywords) / sizeof(*keywords));
 		word = scanner(keywords, length);
 
 		if(strcmp(word, "open") == 0) {
 			fireBoss(player, inventory, caverns);
+
+		} else if(strcmp(word, "return") == 0) {
+			return;
+
+		} else if(strcmp(word, "locate") == 0) {
+			locate = 1;
 		}
 	}
 }
@@ -131,9 +139,9 @@ void northCavernsEntrance(struct Player *player, struct Inventory *inventory, st
 	for(;;) {
 		if(locate) {
 			if(! caverns->phasefour) {
-				typeout("\nYou head towards the Northern area of the cavern. Standing before the bellowing flames of the opening, you feel the scortching heat upon your skin. It is impossible to pass.");
+				typeout("\nYou stand before the bellowing flames of the cavern's Northern opening. You feel the scortching heat upon your skin. It is impossible to pass.");
 			} else {
-				typeout("\nYou head towards the Northern area of the cavern. The flames that once bellowed here have been extinguished. Only embers and smoke remain.");
+				typeout("\nYou stand before the cavern's Northern opening. The flames that once bellowed here have been extinguished. Only embers and smoke remain.");
 			}
 			locate = 0;
 		}
@@ -146,16 +154,18 @@ void northCavernsEntrance(struct Player *player, struct Inventory *inventory, st
 		if(strcmp(word, "enter") == 0) {
 			if(! caverns->phasefour) {
 				typeout("\nYou do not dare near any closer to the flames..");
-				locate = 0;
 			} else {
+				typeout("\nYou enter the Northern cavern passageway. The air becomes more hot and arid as you approach the caverns core.\n");
 				northCaverns(player, inventory, caverns);
+				locate = 1;
 			}
 
 		} else if(strcmp(word, "return") == 0) {
 			return;
 
-		} else if(strcmp(word, "light") == 0 && caverns->phaseone) {
+		} else if(strcmp(word, "light") == 0 && caverns->phaseone && strcmp(player->weapon->name, "Wooden Stick") == 0) {
 			caverns->phasetwo = 1;
+			strcpy(player->weapon->name, "Flaming Wooden Stick");
 			typeout("\nYou light the wooden stick aflame..");
 
 		} else if(strcmp(word, "ice") == 0 && caverns->phasethree && ! caverns->phasefour) {
@@ -180,17 +190,28 @@ void westCavernsEntrace(struct Player *player, struct Inventory *inventory, stru
 	bool locate = 1;
 	for(;;) {
 		if(locate) {
-			typeout("\nYou head towards the West, where you approach the large opening upon the outer wall. You hear the sound of whispers come from deep within the darkness.");
 			locate = 0;
+			typeout("\nYou stand before the large opening of the cavern's Western wall. "); 
+			if(! caverns->phaseone) {
+				typeout("You hear the sound of whispers come from deep within the darkness.");
+			}
 		}
+
 		char *word;
 		const char *keywords[] = { "enter", "return", "help", "locate" };
 		int length = (sizeof(keywords) / sizeof(*keywords));
 		word = scanner(keywords, length);
 
 		if(strcmp(word, "enter") == 0) {
-			westCaverns(player, inventory, caverns);
-			locate = 1;
+			if(! caverns->phasetwo && caverns->phaseone) {
+				typeout("\nYou do not dare enter that darkness again without a torch..");
+			} else {
+				if(caverns->phasetwo) {
+					typeout("\nUsing your torch, you navigate through the passage way. The air begins to feel chill and you notice ice forming upon the walls.");
+				}
+				westCaverns(player, inventory, caverns);
+				locate = 1;
+			}
 
 		} else if(strcmp(word, "return") == 0) {
 			return;
@@ -214,7 +235,7 @@ void startCaverns(struct Player *player, struct Inventory *inventory)
 	caverns->phaseone = 0;
 	caverns->phasetwo = 0;
 	caverns->phasethree = 0;
-	caverns->hint = "The darkness calls you.."; // how does this work?
+	caverns->hint = "The darkness calls you..";
 
 	printf("\nLoading caverns binary");
 	typeout("........ ");
@@ -243,6 +264,7 @@ void startCaverns(struct Player *player, struct Inventory *inventory)
 
 		if(strcmp(word, "east") == 0) {
 			;; //eastCaverns();
+
 		} else if(strcmp(word, "west") == 0) {
 			westCavernsEntrace(player, inventory, caverns);
 			locate = 1;
