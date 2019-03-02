@@ -91,15 +91,15 @@ int main()
 	heal->learned = 0;
 	strcpy(heal->name, "Heal");
 
-	struct Spell *barrier;
-	barrier = malloc(sizeof(struct Spell));
-	barrier->dmg = -10;
-	barrier->mp = 5;
-	barrier->learned = 0;
-	strcpy(barrier->name, "Barrier");
+	struct Spell *earth;
+	earth = malloc(sizeof(struct Spell));
+	earth->dmg = 10;
+	earth->mp = 8;
+	earth->learned = 0;
+	strcpy(earth->name, "Earth");
 
 	// Create array of all spells
-	struct Spell *spells[] = { fire, ice, heal, barrier };
+	struct Spell *spells[] = { fire, ice, heal, earth };
 
 	// Items
 	struct Item *potion;

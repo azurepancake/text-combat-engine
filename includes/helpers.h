@@ -37,7 +37,7 @@ enum Spells {
 	Fire,
 	Ice,
 	Heal,
-	Barrier
+	Earth
 };
 
 enum Items {
