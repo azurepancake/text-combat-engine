@@ -10,10 +10,12 @@ void earthBoss(struct Player *player, struct Inventory *inventory, struct Cavern
 	enemy = setupEnemy(enemy, inventory->weapons[Broadsword], enemySpells, inventory, player);
 	if(battle(player, enemy)) {
 		getchar();
-		caverns->phaseseven = 2;
+		caverns->phaseseven = 1;
 		caverns->hint = "Opposites attract..";
 		inventory->spells[Fire]->learned = 1;
-		typeout("\nYou've defeated the beast formed of earth. You open the treasure chest and find an ancient scroll. You feel the power of fire flow through you..\n\nYou learn the spell 'Earth'.");		  return;
+		typeout("\nYou've defeated the beast formed of earth. You open the treasure chest and find an ancient scroll. You feel the power of the earth flow through you..\n\nYou learn the spell 'Earth'.");		  
+
+		return;
 	} else {
 		return;
 	}
@@ -61,7 +63,7 @@ void eastCavernsEntrance(struct Player *player, struct Inventory *inventory, str
 	bool locate = 1;
 	for(;;) {
 		if(locate) {
-			if(! caverns->phasefour) {
+			if(! caverns->phasesix) {
 				typeout("\nYou stand before the tangled weeds of the cavern's Eastern opening. ");
 			} else {
 				typeout("\nYou stand before the cavern's Northern opening. The smell of burnt plant life hangs in the air.");
@@ -78,7 +80,7 @@ void eastCavernsEntrance(struct Player *player, struct Inventory *inventory, str
 			if(! caverns->phasesix) {
 				typeout("\nThe weeds are barbed and too dense to pass.");
 			} else {
-				typeout("\nYou enter the Eastern cavern passageway. Suddenly, you feel as if you've entered a tropical rainforest\n");
+				typeout("\nYou enter the Eastern cavern passageway. Suddenly, you feel as if you've entered a tropical rainforest.\n");
 				eastCaverns(player, inventory, caverns);
 				locate = 1;
 			}
@@ -86,7 +88,7 @@ void eastCavernsEntrance(struct Player *player, struct Inventory *inventory, str
 		} else if(strcmp(word, "return") == 0) {
 			return;
 
-		} else if(strcmp(word, "ice") == 0 && caverns->phasethree && ! caverns->phasefour) {
+		} else if(strcmp(word, "fire") == 0 && caverns->phasefive && ! caverns->phasesix) {
 			caverns->phasesix = 1;
 			typeout("\nYou channel your power into a spell of fire, burning the tangled plant matter away.");
 
