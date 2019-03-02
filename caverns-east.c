@@ -39,7 +39,7 @@ void eastCaverns(struct Player *player, struct Inventory *inventory, struct Cave
 		int length = (sizeof(keywords) / sizeof(*keywords));
 		word = scanner(keywords, length);
 
-		if(strcmp(word, "open") == 0) {
+		if(strcmp(word, "open") == 0 && ! caverns->phaseseven) {
 			earthBoss(player, inventory, caverns);
 
 		} else if(strcmp(word, "return") == 0) {

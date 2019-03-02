@@ -4,15 +4,12 @@ void startCaverns(struct Player *player, struct Inventory *inventory)
 {
 	struct Caverns *caverns;
 	caverns = malloc(sizeof(struct Caverns));
-	caverns->phaseone = 0;
-	caverns->phasetwo = 0;
-	caverns->phasethree = 0;
 	caverns->hint = "The darkness calls you..";
 
 	printf("\nLoading caverns binary");
 	typeout("........ ");
 	printf("OK!\n\n\n");
-	printf("//// T H E	C A V E R N S ////\n");
+	printf("//// T H E  C A V E R N S ////\n");
 
 	bool locate = 1;
 	for(;;) {
